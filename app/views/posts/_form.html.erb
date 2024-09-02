@@ -2,6 +2,11 @@
 
   <%= form_with(model: post) do |form| %>
     <h1>New post</h1>
+
+    <div>
+      <%= form.text_field :user_id, type:"hidden", value: current_user.id %>
+    </div>
+
     <div>
       <% invalid = post.errors.include?(:title) %>
       <%= form.label :title, style: "display: block" %>
