@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="z-index: 10">
   <div class="container-fluid">
     <a class="navbar-brand" href="<%= root_path %>">Home</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,6 +6,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
           <%= link_to "New Post", new_post_path, class: "nav-link" %>
         </li>
@@ -13,6 +14,12 @@
           <%= link_to "About", home_about_path, class: "nav-link" %>
         </li>
         <% if user_signed_in? %>
+          <% if current_user.avatar.attached?%>
+            <%= image_tag current_user.avatar, style:"width:50px; height:50px; border-radius: 100%" %>
+          <% end %>
+          <li class ="nav-item">
+            <%= link_to "View my Profile", current_user, class:"nav-link" %>
+          </li>
           <li class="nav-item">
             <%= link_to "Sign Out", destroy_user_session_path, class: "nav-link" %>
           </li>
@@ -45,10 +52,10 @@
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
           </li>
       </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <%= form_with url: profiles_index_path, method: :get, class:"d-flex", role:"search" do |form| %>
+          <%= form.search_field :query, value: params[:query], placeholder: "Search" %>
+        <%= form.submit "Search", class:" btn btn-outline-success" %>
+        <% end %>
     </div>
   </div>
 </nav>

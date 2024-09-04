@@ -1,4 +1,23 @@
 <%= stylesheet_link_tag("post") %>
+
+<% if user_signed_in? %>
+  <% current_user.follow_requests.each do |request| %>
+    <%= request.followerable.username %> wants to follow you
+    <%= button_to "Accept", accept_path(request.followerable) %>
+    <%= button_to "Decline", decline_path(request.followerable) %>
+  <% end %>
+
+  <h3>Followers</h3>
+  <% current_user.followers.each do |follower| %>
+    <p> <b> <%= link_to follower.username, follower %></b></p>
+  <% end %>
+  <h3>Following</h3>
+  <% current_user.following.each do |following| %>
+    <p> <%= link_to following.username, following %></p>
+  <% end %>
+<% end %>
+
+
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Posts" %>

@@ -60,3 +60,5 @@ end
 
 gem 'cssbundling-rails'
 gem "devise", "~> 4.9"
+gem 'followability', github: 'nejdetkadir/followability', branch: 'main'
+gem 'ransack'
